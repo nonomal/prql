@@ -86,6 +86,7 @@ fn get_targets() {
     sql.glaredb
     sql.mssql
     sql.mysql
+    sql.oracle
     sql.postgres
     sql.redshift
     sql.sqlite
@@ -423,7 +424,7 @@ fn compare_directories(dir1: &Path, dir2: &Path) {
 fn debug() {
     assert_cmd_snapshot!(prqlc_command()
         .args(["debug", "lineage"])
-        .pass_stdin("from tracks | select {artist, album}"), @r"
+        .pass_stdin("from tracks | select {artist, album}"), @"
     success: true
     exit_code: 0
     ----- stdout -----
@@ -434,29 +435,29 @@ fn debug() {
           name:
           - tracks
           - artist
-          target_id: 118
+          target_id: 120
           target_name: null
         - !Single
           name:
           - tracks
           - album
-          target_id: 119
+          target_id: 121
           target_name: null
         inputs:
-        - id: 116
+        - id: 118
           name: tracks
           table:
           - default_db
           - tracks
     nodes:
-    - id: 116
+    - id: 118
       kind: Ident
       span: 1:0-11
       ident: !Ident
       - default_db
       - tracks
-      parent: 121
-    - id: 118
+      parent: 123
+    - id: 120
       kind: Ident
       span: 1:22-28
       ident: !Ident
@@ -464,9 +465,9 @@ fn debug() {
       - tracks
       - artist
       targets:
-      - 116
-      parent: 120
-    - id: 119
+      - 118
+      parent: 122
+    - id: 121
       kind: Ident
       span: 1:30-35
       ident: !Ident
@@ -474,21 +475,21 @@ fn debug() {
       - tracks
       - album
       targets:
-      - 116
-      parent: 120
-    - id: 120
+      - 118
+      parent: 122
+    - id: 122
       kind: Tuple
       span: 1:21-36
       children:
-      - 118
-      - 119
-      parent: 121
-    - id: 121
+      - 120
+      - 121
+      parent: 123
+    - id: 123
       kind: 'TransformCall: Select'
       span: 1:14-36
       children:
-      - 116
-      - 120
+      - 118
+      - 122
     ast:
       name: Project
       stmts:
